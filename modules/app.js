@@ -77,8 +77,6 @@ btnModificar.addEventListener("click", () => {
     let cantidad = document.getElementById("cantidadMod").value;
 
     inventario.modificar(codigo, nombre, cantidad, costo);
-    
-
 });
 btnListar.addEventListener("click", () => {
     let resListar = inventario.listado();
@@ -106,7 +104,6 @@ btnBuscar.addEventListener("click", () => {
         divRes.innerHTML = res;
         operacion.innerHTML += "Se buscó un elemento en el inventario<hr>";
         operacion.scrollTop = operacion.scrollHeight;
-
     } else {
         document.getElementById('title_search').innerHTML = "<h3 id='title_search'>Resultado de la búsqueda</h3>";
         document.getElementById('title_search').style.display = "block";

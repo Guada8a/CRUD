@@ -6,13 +6,16 @@ export default class Inventario{
         this.productos.push(producto);
     }
     agregarPosicion(producto, posicion) {
-        let pIni = this.productos[posicion-1];
-        this.productos[posicion-1] = producto;
-        for (let i = posicion + 1; i < this.productos.length; i++) {
-            let pTemp = this.productos[i];
-            this.productos[i] = pIni;
-            pIni = pTemp;
-        }
+        let pIni = this.productos[posicion - 1];
+        if (posicion < this.productos.length+1) {
+            this.productos[posicion - 1] = producto;
+            for (let i = posicion + 1; i < this.productos.length; i++) {
+                let pTemp = this.productos[i];
+                this.productos[i] = pIni;
+                pIni = pTemp;
+            }
+        } else
+            alert("No existe la posición");
     }
     eliminar(codigo) {
         let elemento = 0, product = "";
@@ -28,9 +31,6 @@ export default class Inventario{
                 }
         }
         return product;
-    }
-    modificar(codigo) {
-        
     }
     listado() {
         let str = '<tr><td>Código</td><td>Nombre</td><td>Cantidad</td><td>Costo</td></tr >';
