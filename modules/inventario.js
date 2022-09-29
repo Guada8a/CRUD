@@ -45,13 +45,16 @@ export default class Inventario{
     }
     listadoInverso() {
         let str = '<tr><td>Código</td><td>Nombre</td><td>Cantidad</td><td>Costo</td></tr >';
-        let productosInversos = new Array();
-        for (let i = this.productos.length - 1; i >= 0; i--)
-            productosInversos.push(this.productos[i]);
-        
-        if (productosInversos.length != 0) {
-            for (let i = 0; i <= productosInversos.length-1; i++){
-                str += `<tr><td>${productosInversos[i].codigo} </td> <td>${productosInversos[i].nombre} </td><td> ${productosInversos[i].cantidad} </td><td>${productosInversos[i].costo}</td></tr>`;
+        let aux = 0;
+        //Para evitar que se modifique el arreglo original
+        for (let k = 0; k < this.productos.length / 2; k++){
+            aux = this.productos[k];
+            this.productos[k] = this.productos[this.productos.length - 1 - k];
+            this.productos[this.productos.length - 1 - k] = aux;
+        }
+        if (this.productos.length != 0) {
+            for (let i = 0; i <= this.productos.length-1; i++){
+                str += `<tr><td>${this.productos[i].codigo} </td> <td>${this.productos[i].nombre} </td><td> ${this.productos[i].cantidad} </td><td>${this.productos[i].costo}</td></tr>`;
             }
             return str;
         } else {
@@ -60,13 +63,9 @@ export default class Inventario{
         }
     }
     buscar(codigo) {
-        let product = '<tr><td>Código</td><td>Nombre</td><td>Cantidad</td><td>Costo</td></tr >';
-        for (let i = 0; i <= this.productos.length; i++) {
-            if (this.productos[i]) 
-                if (codigo === this.productos[i].codigo) {
-                    product += `<tr><td>${this.productos[i].codigo} </td> <td>${this.productos[i].nombre} </td><td> ${this.productos[i].cantidad} </td><td>${this.productos[i].costo}</td></tr>`;
-                }
-        }
-        return product;
+        for (let i = 0; i <= this.productos.length; i++)
+            if (this.productos[i])
+                if (codigo === this.productos[i].codigo)
+                    return this.productos[i];
     }
 }

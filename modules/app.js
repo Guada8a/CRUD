@@ -97,11 +97,11 @@ btnListarInverso.addEventListener("click", () => {
 btnBuscar.addEventListener("click", () => {
     let codigo = document.getElementById("buscar1").value;
     let divRes = document.getElementById("res");
-    let res = inventario.buscar(codigo);
-
-    if (res != "") {
+    let elemento = inventario.buscar(codigo);
+    
+    if (elemento != null) {
         document.getElementById('title_search').style.display = "block";
-        divRes.innerHTML = res;
+        divRes.innerHTML = `<tr><td>Código</td><td>Nombre</td><td>Cantidad</td><td>Costo</td></tr><tr><td>${elemento.codigo} </td> <td>${elemento.nombre} </td><td> ${elemento.cantidad} </td><td>${elemento.costo}</td></tr>`;
         operacion.innerHTML += "Se buscó un elemento en el inventario<hr>";
         operacion.scrollTop = operacion.scrollHeight;
     } else {
