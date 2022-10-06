@@ -28,15 +28,6 @@ document.getElementById("agregarh3").addEventListener("click", () => {
         mostrar1 = false;
     } 
 });
-document.getElementById("modificarh3").addEventListener("click", () => {
-    if (!mostrar2) {
-        document.getElementById("crud_modificar").style.display = "block";
-        mostrar2 = true;
-    } else {
-        document.getElementById("crud_modificar").style.display = "none";
-        mostrar2 = false;
-    }
-});
 document.getElementById("buscarh3").addEventListener("click", () => {
     if (!mostrar3) {
         document.getElementById("crud_buscar").style.display = "block";
@@ -72,14 +63,6 @@ btnAgregarPosicion.addEventListener("click", () => {
     nombre.value = "";
     costo.value = "";
     cantidad.value = "";
-});
-btnModificar.addEventListener("click", () => {
-    let codigo = document.getElementById("codigoMod").value;
-    let nombre = document.getElementById("nombreMod").value;
-    let costo = document.getElementById("costoMod").value;
-    let cantidad = document.getElementById("cantidadMod").value;
-
-    inventario.modificar(codigo, nombre, cantidad, costo);
 });
 btnListar.addEventListener("click", () => {
     let resListar = inventario.listado();
