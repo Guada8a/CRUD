@@ -4,9 +4,6 @@ export default class Producto {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.costo = costo;
+        this.total = cantidad * costo;
     }
-    getCodigo() { return this.codigo; }
-    getNombre() { return this.nombre; }
-    getCantidad() { return this.cantidad; }
-    getCosto() { return this.costo; }
 }

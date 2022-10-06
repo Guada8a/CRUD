@@ -48,15 +48,18 @@ document.getElementById("buscarh3").addEventListener("click", () => {
 });
 /***********/
 btnAgregar.addEventListener("click", () => {
-    let producto = new Producto(codigo.value, nombre.value, cantidad.value, costo.value);
-    inventario.agregar(producto);
-    operacion.innerHTML += "Se agregó un elemento al inventario<hr>";
-    operacion.scrollTop = operacion.scrollHeight;
+    let verifica = inventario.buscar(codigo.value);
+    if (verifica == null) {
+        let producto = new Producto(codigo.value, nombre.value, cantidad.value, costo.value);
+        inventario.agregar(producto);
+        operacion.innerHTML += "Se agregó un elemento al inventario<hr>";
+        operacion.scrollTop = operacion.scrollHeight;
+        codigo.value++;
+        nombre.value = "";
+        costo.value = "";
+        cantidad.value = "";
+    } else alert("El código ya existe");
     
-    codigo.value++;
-    nombre.value = "";
-    costo.value = "";
-    cantidad.value = "";
 });
 btnAgregarPosicion.addEventListener("click", () => {
     let posicion = document.getElementById("posicion").value;
@@ -97,7 +100,8 @@ btnListarInverso.addEventListener("click", () => {
 btnBuscar.addEventListener("click", () => {
     let codigo = document.getElementById("buscar1").value;
     let divRes = document.getElementById("res");
-    let elemento = inventario.buscar(codigo);
+    //let elemento = inventario.buscar(codigo);
+    let elemento = inventario.busquedaBinaria(codigo);
     
     if (elemento != null) {
         document.getElementById('title_search').style.display = "block";
@@ -115,10 +119,10 @@ btnEliminar.addEventListener("click", () => {
     let res = inventario.eliminar(codigo);
 
     let divRes = document.getElementById("res");
-    if (res != "") {
+    if (res) {
         document.getElementById('title_search').innerHTML = "<h3 id='title_search'>Eliminado</h3>";
         document.getElementById('title_search').style.display = "block";
-        divRes.innerHTML = res;
+        divRes.innerHTML = `El elemento con código ${codigo} ha sido eliminado`;
         operacion.innerHTML += "Se eliminó un elemento del inventario<hr>";
         operacion.scrollTop = operacion.scrollHeight;
     } else {
@@ -126,4 +130,11 @@ btnEliminar.addEventListener("click", () => {
         divRes.innerHTML = "Ingrese un código válido";  
     }
 
+});
+btnOrdenar.addEventListener("click", () => {
+    let pre = inventario.ordenarCodigo();
+    if (pre != null) {
+        operacion.innerHTML += "Se ordenaron los elementos del inventario<hr>";
+        operacion.scrollTop = operacion.scrollHeight;
+    }
 });

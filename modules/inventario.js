@@ -18,19 +18,20 @@ export default class Inventario{
             alert("No existe la posición");
     }
     eliminar(codigo) {
-        let elemento = 0, product = "";
+        let product = false;
         for (let i = 0; i <= this.productos.length; i++) {
             if (this.productos[i])
                 if (codigo === this.productos[i].codigo) {
                     for (let o = i; o < this.productos.length - 1; o++)
                         this.productos[o] = this.productos[o + 1];
 
-                    this.productos[this.productos.length - 1] = elemento;
+                    this.productos[this.productos.length - 1] = 0;
                     this.productos.pop();
-                    product = `El elemento con código ${codigo} ha sido eliminado`;
+                    product = true;
                 }
         }
         return product;
+        
     }
     listado() {
         let str = '<tr><td>Código</td><td>Nombre</td><td>Cantidad</td><td>Costo</td></tr >';
@@ -43,10 +44,25 @@ export default class Inventario{
             return str = '';
         }
     }
+    ordenarCodigo() {
+        if (this.productos.length != 0) {
+            let i, j, aux;
+            for (i = 0; i < this.productos.length - 1; i++)
+                for (j = 0; j < this.productos.length - i - 1; j++)
+                    if (parseInt(this.productos[j + 1].codigo) < parseInt(this.productos[j].codigo)) {
+                        aux = this.productos[j + 1].codigo;
+                        this.productos[j + 1].codigo = this.productos[j].codigo;
+                        this.productos[j].codigo = aux;
+                    }
+            
+        } else {
+            alert("No hay elementos en el inventario");
+            return null;
+        }
+    }
     listadoInverso() {
         let str = '<tr><td>Código</td><td>Nombre</td><td>Cantidad</td><td>Costo</td></tr >';
         let aux = 0;
-        //Para evitar que se modifique el arreglo original
         for (let k = 0; k < this.productos.length / 2; k++){
             aux = this.productos[k];
             this.productos[k] = this.productos[this.productos.length - 1 - k];
@@ -61,6 +77,23 @@ export default class Inventario{
             alert("No hay productos en el inventario");
             return str = "";
         }
+    }
+    busquedaBinaria(codigo) {
+        let producto = false;
+        let inicio = 0;
+        let fin = this.productos.length - 1;
+        let mitad = Math.floor((inicio + fin) / 2);
+        while (inicio <= fin) {
+            if (Number(this.productos[mitad].codigo) === Number(codigo)) {
+                producto = this.productos[mitad];
+                break;
+            } else if (Number(this.productos[mitad].codigo) < Number(codigo)) {
+                inicio = mitad + 1;
+            } else
+                fin = mitad - 1;
+            mitad = Math.floor((inicio + fin) / 2);
+        }
+        return producto;
     }
     buscar(codigo) {
         for (let i = 0; i <= this.productos.length; i++)
